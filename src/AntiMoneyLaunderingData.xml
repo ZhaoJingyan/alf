@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alf.dao.AntiMoneyLaunderingDataMessage">
+
+	<resultMap type="com.alf.bean.AntiMoneyLaunderingData" id="amldMap">
+	  <result column="jyrq" javaType="java.util.Date" jdbcType="DATE" property="jyrq"/>
+	  <result column="jysj" jdbcType="CHAR" property="jysj"/>
+	  <result column="jyjg" jdbcType="CHAR" property="jyjg"/>
+	  <result column="jylsh" jdbcType="CHAR" property="jylsh"/>
+	  <result column="flxh" jdbcType="CHAR" property="flxh"/>
+	</resultMap>
+
+	<select id="getAntiMoneyLaunderingDatasBy" parameterType="Date" resultMap="amldMap">
+	  select JYRQ as jyrq,JYSJ as jysj,JYJG as jyjg,JYLSH as jylsh,FLXH as flxh
+	    from test
+	    where JYRQ = #{_parameter,jdbcType=DATE}
+	</select>
+	
+	<select id="getAllAntiMoneyLaunderingDatas" resultMap="amldMap">
+		  select JYRQ
+	        ,JYSJ
+	        ,JYJG
+	        ,JYLSH
+	        ,FLXH
+	    from test
+	</select>
+	
+	<insert id="addAntiMoneyLaunderingData" parameterType="com.alf.bean.AntiMoneyLaunderingData">
+	  insert into test(
+	    JYRQ,
+	    JYSJ,
+	    JYJG,
+	    JYLSH,
+	    FLXH
+	  ) values (
+	    #{jyrq,jdbcType=DATE},
+	    #{jysj,jdbcType=CHAR},
+	    #{jyjg,jdbcType=CHAR},
+	    #{jylsh,jdbcType=CHAR},
+	    #{flxh,jdbcType=CHAR}
+	  )
+	</insert>
+</mapper>

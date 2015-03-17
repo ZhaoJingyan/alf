@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+           "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <settings>
+    <setting name="useGeneratedKeys" value="false"/>
+    <setting name="useColumnLabel" value="true"/>
+  </settings>
+  
+  <environments default="development">
+    <environment id="development">
+      <!-- JDBC事务管理 -->
+      <transactionManager type="JDBC">
+        <property name="" value=""/>
+      </transactionManager>
+      <!--  UNPOOLED 非连接池配置  -->
+      <dataSource type="UNPOOLED">
+        <property name="driver" value="org.sqlite.JDBC"/>
+        <property name="url" value="jdbc:sqlite:D:/SQLite/test.db"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <mapper resource="AntiMoneyLaunderingData.xml"/>
+  </mappers>
+
+</configuration>
