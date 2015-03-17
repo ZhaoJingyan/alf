@@ -24,8 +24,6 @@ public class AntiMoneyLaunderingData {
 
 	}
 	
-	// TODO : 按要求，重新修改此Bean
-	
 	/**
 	 * 交易日期
 	 */
