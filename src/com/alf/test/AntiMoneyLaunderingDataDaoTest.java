@@ -33,11 +33,6 @@ public class AntiMoneyLaunderingDataDaoTest {
 			this.dao = new AntiMoneyLaunderingDataDao();
 			
 			data = new AntiMoneyLaunderingData();
-			data.setJyrq(new Date());
-			data.setJysj("12:45");
-			data.setJyjg("1752");
-			data.setJylsh("20");
-			data.setFlxh("ZH");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
