@@ -1,5 +1,10 @@
 ( 
-	select 'wzj' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.fkrzh as THZH,wz.FKR as THHM, wz.TCH as BHJG,wz.tchm as BHMC,wz.TRH as THJM,wz.TRHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx
+	select 'wzj' as ywlx ,
+	wz.YWLS as YWLS,wz.HXRQ as HXRQ,
+	hx.JZSJ as JYSJ,wz.CZJG as JYJG,
+	hx.wwh as HXLS, 
+	wz.xzh AS BHZH,
+	wz.xzhm as BHHM,wz.fkrzh as THZH,wz.FKR as THHM, wz.TCH as BHJG,wz.tchm as BHMC,wz.TRH as THJM,wz.TRHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx
 	  from tc_yw_pjdjb wz 
 	        left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
 	        left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
