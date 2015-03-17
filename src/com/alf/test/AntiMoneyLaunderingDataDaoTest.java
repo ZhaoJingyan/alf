@@ -3,7 +3,6 @@ package com.alf.test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
