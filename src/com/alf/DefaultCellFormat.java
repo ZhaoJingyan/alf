@@ -1,6 +1,7 @@
 package com.alf;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,12 +19,18 @@ public class DefaultCellFormat implements CellFormat {
 	 */
 	public DefaultCellFormat() {
 		dateFormat = new SimpleDateFormat("yyyy/MM/dd"); // 日期格式
+		decimalFormat = new DecimalFormat("###################.00");
 	}
 	
 	/**
 	 * 日期格式化
 	 */
 	private DateFormat dateFormat;
+	
+	/**
+	 * 数字格式化输出
+	 */
+	private DecimalFormat decimalFormat;
 	
 	/**
 	 * 生成指定格式的字符串。
@@ -40,6 +47,8 @@ public class DefaultCellFormat implements CellFormat {
 			result = dateFormat.format((Date)object);
 		} else if (object instanceof String) {
 			result = (String)object;
+		} else if (object instanceof Double) {
+			result = decimalFormat.format((Double)object);
 		} else {
 			result = object.toString();
 		}

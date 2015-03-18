@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.alf.AntiMoneyLaunderingDatesFile;
 import com.alf.CreateAntiMoneyLaunderingDatasFile;
+import com.alf.DefaultCellFormat;
 import com.alf.bean.AntiMoneyLaunderingData;
 import com.alf.dao.AntiMoneyLaunderingDataDao;
 
@@ -72,6 +73,14 @@ public class AntiMoneyLaunderingDataDaoTest {
 		buffer.delete(0, buffer.length());
 		System.out.println(buffer.length());
 		System.out.println(buffer);
+	}
+	
+	@Ignore("≤‚ ‘Õ®π˝")
+	@Test
+	public void test5(){
+		DefaultCellFormat defaultCellFormat = new DefaultCellFormat();
+		double number = 11111111111111111111.123D;
+		System.out.println(defaultCellFormat.print(number, 0));
 	}
 	
 	@After
