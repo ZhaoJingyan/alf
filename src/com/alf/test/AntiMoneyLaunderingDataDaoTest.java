@@ -3,7 +3,6 @@ package com.alf.test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -13,6 +12,7 @@ import org.junit.Test;
 
 import com.alf.AntiMoneyLaunderingDatesFile;
 import com.alf.CreateAntiMoneyLaunderingDatasFile;
+import com.alf.DefaultCellFormat;
 import com.alf.bean.AntiMoneyLaunderingData;
 import com.alf.dao.AntiMoneyLaunderingDataDao;
 
@@ -33,11 +33,6 @@ public class AntiMoneyLaunderingDataDaoTest {
 			this.dao = new AntiMoneyLaunderingDataDao();
 			
 			data = new AntiMoneyLaunderingData();
-			data.setJyrq(new Date());
-			data.setJysj("12:45");
-			data.setJyjg("1752");
-			data.setJylsh("20");
-			data.setFlxh("ZH");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,6 +73,14 @@ public class AntiMoneyLaunderingDataDaoTest {
 		buffer.delete(0, buffer.length());
 		System.out.println(buffer.length());
 		System.out.println(buffer);
+	}
+	
+	@Ignore("≤‚ ‘Õ®π˝")
+	@Test
+	public void test5(){
+		DefaultCellFormat defaultCellFormat = new DefaultCellFormat();
+		double number = 11111111111111111111.123D;
+		System.out.println(defaultCellFormat.print(number, 0));
 	}
 	
 	@After

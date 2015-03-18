@@ -5,17 +5,144 @@
 <mapper namespace="com.alf.dao.AntiMoneyLaunderingDataMessage">
 
 	<resultMap type="com.alf.bean.AntiMoneyLaunderingData" id="amldMap">
-	  <result column="jyrq" javaType="java.util.Date" jdbcType="DATE" property="jyrq"/>
-	  <result column="jysj" jdbcType="CHAR" property="jysj"/>
-	  <result column="jyjg" jdbcType="CHAR" property="jyjg"/>
-	  <result column="jylsh" jdbcType="CHAR" property="jylsh"/>
-	  <result column="flxh" jdbcType="CHAR" property="flxh"/>
+	  <!-- 1 交易日期 -->
+	  <result column="HXRQ" jdbcType="DATE" property="hxrq"/>
+	  <!-- 2 交易日期 -->
+	  <result column="JYSJ" jdbcType="CHAR" property="jzsj" />
+	  <!-- 3 交易机构 -->
+	  <result column="JYJG" jdbcType="CHAR" property="jyjg" />
+	  <!-- 4 交易流水号 -->
+	  <result column="HXLS" jdbcType="CHAR" property="hxls" />
+	  <!-- 5 分录序号 NULL  -->
+	  <!-- 6 本行账号 -->
+	  <result column="BHZH" jdbcType="CHAR" property="bhzh" />
+	  <!-- 7 客户名或账户名 -->
+	  <result column="BHHM" jdbcType="VARCHAR" property="bhhm" />
+	  <!-- 8 借贷标志 -->
+	  <result column="jdbs" jdbcType="CHAR" property="jdbs" />
+	  <result column="ywlx" jdbcType="CHAR" property="ywlx" />
+	  <!-- 9 币种 -->
+	  <result column="BZ" jdbcType="CHAR" property="bz" />
+	  <!-- 10 金额 -->
+	  <result column="JE" jdbcType="DOUBLE" property="je" />
+	  <!-- 11 现金转账标志 -->
+	  <result column="THZH" jdbcType="CHAR" property=""thzh />
+	  <!-- 12 摘要 -->
+	  <result column="zy" jdbcType="CHAR" property="zy" />
+	  <!-- 13 交易对方类型 NULL -->
+	  <!-- 14 交易对方账户类型 NULL -->
+	  <!-- 15 交易对方账号，见11 NULL -->
+	  <!-- 16 交易对方名称 -->
+	  <result column="THHM" jdbcType="VARCHAR" property="thhm" />
+	  <!-- 17 交易对方证件类型 NULL  -->
+	  <!-- 18 交易对方证件号码 NULL -->
+	  <!-- 19 交易对方银行行号，即对方金融机构的网点代码 -->
+	  <result column="THJM" jdbcType="CHAR" property="thjm" />
+	  <!-- 20 交易方式 -->
+	  <result column="bhpzlx" jdbcType="CHAR" property="bhpzlx" />
+	  <!-- 21 涉外收支交易分类代码 NULL -->
+	  <!-- 22 是否结售汇 ‘1’：结售汇, ‘0’：不结结售汇 NULL -->
+	  <!-- 23 是否跨境交易 ‘1’：跨境 ‘0’不跨境 NULL -->
+	  <!-- 24 交易来源 NULL -->
+	  <!-- 25 记录代码 NULL -->
+	  <!-- 26 来源 NULL -->
+	  <!-- 27 业务参考号 NULL -->
+	  <!-- 28 对方科目 NULL -->
+	  <!-- 29 客户性质 NULL -->
+	  <!-- 30 业务类型 NULL -->
+	  <!-- 31 业务流水 -->
+	  <result column="YWLS" jdbcType="CHAR" property="ywls" />
+	  <!-- 32 凭证号码 -->
+	  <result column="ZKH" jdbcType="" property="zkh" />
+	  <!-- 33 摘要，见12 NULL -->
+	  <!-- 34 余额 NULL -->
+	  <!-- 35 客户类型，见6 NULL -->
+	  <!-- 36 交易分行机构码 NULL -->
+	  <!-- 37 交易渠道 NULL -->
+	  <!-- 38 交易对方银行行号类型 NULL -->
+	  <!-- 39 交易对方银行名称 -->
+	  <result column="THMC" jdbcType="CHAR" property="thmc" />
+	  <!-- 40 客户号 NULL -->
+	  <!-- 41 交易对方客户号 NULL -->
 	</resultMap>
 
 	<select id="getAntiMoneyLaunderingDatasBy" parameterType="Date" resultMap="amldMap">
-	  select JYRQ as jyrq,JYSJ as jysj,JYJG as jyjg,JYLSH as jylsh,FLXH as flxh
-	    from test
-	    where JYRQ = #{_parameter,jdbcType=DATE}
+( 
+	select 'wzj' as ywlx,
+	       wz.YWLS as YWLS,
+	       wz.HXRQ as HXRQ,
+	       hx.JZSJ as JYSJ,
+	       wz.CZJG as JYJG,
+	       hx.wwh as HXLS, 
+	       wz.xzh AS BHZH,
+	       wz.xzhm as BHHM,
+	       wz.fkrzh as THZH,
+	       wz.FKR as THHM, 
+	       wz.TCH as BHJG,wz.tchm as BHMC,
+	       wz.TRH as THJM,
+	       wz.TRHM as THMC, 
+	       wz.BZ,
+	       wz.JE,
+	       wz.ZKH,
+	       wz.zy,NOTEDES.des as PZLX,
+	       wz.jdbs ,wz.zy,
+	       wz.bhpzlx as bhpzlx
+	  from tc_yw_pjdjb wz 
+	        left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
+	        left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+	   where  hx.jym not in ('020045','020047') 
+	   and (wz.hxzt='1') 
+	   and wz.JDBS='1' 
+	   and wz.djblx='ssywwz' 
+	   and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union (
+	select 'wzd' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.skrzh as THZH,wz.SKR as THHM, wz.TCH as BHJG,wz.tchm as BHMC,wz.TRH as THJM,wz.TRHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx
+	from tc_yw_pjdjb wz 
+	      left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
+	      left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+	where hx.jym not in ('020045','020047') 
+      and (wz.hxzt='1') 
+      and wz.JDBS='2' 
+      and wz.djblx='ssywwz' 
+      and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union ( 
+	select 'lzj' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.skrzh as THZH,wz.SKR as THHM, wz.TRH as BHJG,wz.trhm as BHMC,wz.TCH as THJM,wz.TCHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx 
+	from tc_yw_pjdjb wz 
+	      left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
+	      left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+   where hx.jym not in ('020045','020047') and (wz.hxzt='1') and wz.JDBS='1' and wz.djblx='ssywlz' 
+      and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union ( 
+	select 'lzd' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.fkrzh as THZH,wz.FKR as THHM, wz.TRH as BHJG,wz.trhm as BHMC,wz.TCH as THJM,wz.TCHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx 
+	from tc_yw_pjdjb wz 
+	      left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+	where  hx.jym not in ('020045','020047') and (wz.hxzt='1') and wz.djblx='ssywlz' and wz.JDBS='2'  
+	    and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union ( 
+	select 'wtj' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.fkrzh as THZH,wz.FKR as THHM, wz.TCH as BHJG,wz.tchm as BHMC,wz.TRH as THJM,wz.TRHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx 
+	from tc_yw_pjdjb wz
+	      left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
+	      left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+	where  hx.jym not in ('020045','020047') and (wz.hxzt='1') and wz.djblx='tpywwz' and wz.JDBS='1' 
+	  and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union (
+	select 'wtd' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM, wz.skrzh as THZH,wz.SKR as THHM, wz.TCH as BHJG,wz.tchm as BHMC,wz.TRH as THJM,wz.TRHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx 
+	from tc_yw_pjdjb wz 
+	      left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' 
+	      left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+    where hx.jym not in ('020045','020047') and (wz.hxzt='1') and wz.JDBS='2' and wz.djblx='tpywwz' 
+    and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union ( 
+    select 'ltj' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.skrzh as THZH,wz.SKR as THHM, wz.TRH as BHJG,wz.trhm as BHMC,wz.TCH as THJM,wz.TCHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx 
+    from tc_yw_pjdjb wz left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+    where  hx.jym not in ('020045','020047') and (wz.hxzt='1') and wz.JDBS='1' and wz.djblx='tpywlz' 
+    and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+) union ( 
+    select 'ltd' as ywlx ,wz.YWLS as YWLS,wz.HXRQ as HXRQ,hx.JZSJ as JYSJ,wz.CZJG as JYJG,hx.wwh as HXLS, wz.xzh AS BHZH,wz.xzhm as BHHM,wz.fkrzh as THZH,wz.FKR as THHM, wz.TRH as BHJG,wz.trhm as BHMC,wz.TCH as THJM,wz.TCHM as THMC, wz.BZ,wz.JE,wz.ZKH,wz.zy,NOTEDES.des as PZLX ,wz.jdbs ,wz.zy,wz.bhpzlx as bhpzlx
+    from tc_yw_pjdjb wz left outer join HXJYRZ  hx on hx.YWLS = wz.ywls and hx.XYM='08' and hx.jylx='0' left outer join TC_TRANSNOTE NOTEDES on NOTEDES.id = wz.TCPZLX 
+    where  hx.jym not in ('020045','020047') and (wz.hxzt='1' ) and wz.djblx='tpywlz' and wz.JDBS='2'  
+    and wz.HXRQ =  #{_parameter,jdbcType=DATE}
+)
 	</select>
 	
 	<select id="getAllAntiMoneyLaunderingDatas" resultMap="amldMap">
