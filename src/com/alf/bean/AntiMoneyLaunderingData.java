@@ -1,6 +1,8 @@
 package com.alf.bean;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.alf.Format;
 import com.alf.Index;
@@ -128,8 +130,7 @@ public class AntiMoneyLaunderingData {
 	
 	@Index(12)
 	public String getZy(){
-		// TODO : 需要文本处理？？
-		return this.zy;
+		return retStr(replaceBlank(zy), 100);
 	}
 	
 	// 13 交易对方类型
@@ -155,8 +156,7 @@ public class AntiMoneyLaunderingData {
 	
 	@Index(16)
 	public String getThhm(){
-		// TODO : 需要文本处理？？
-		return this.thhm;
+		return retStr(replaceBlank(thhm), 100);
 	}
 	
 	// 17 交易对方证件类型
@@ -286,7 +286,7 @@ public class AntiMoneyLaunderingData {
 	// 33 摘要
 	@Index(33)
 	public String getZy2(){
-		// TODO : 需要文本处理？？
+		retStr(replaceBlank(zy), 120);
 		return this.zy;
 	}
 	
@@ -299,8 +299,25 @@ public class AntiMoneyLaunderingData {
 	// 35 客户类型
 	@Index(35)
 	public String getKhlx(){
-		// TODO : 数据需要加工
-		return null;
+		String acctype = getAccountType(bhzh);
+		if(acctype.equals("card")){
+			return "01";
+		} else {
+			return "02";
+		}
+	}
+	
+	private final String getAccountType(String account) {
+		if (account.startsWith("622")) {
+			// 卡账号
+			return "card";
+		} else if (account.startsWith("7") && account.length() == 16) {
+			// 内部户账号
+			return "inner";
+		} else {
+			// 客户账号
+			return "customer";
+		}
 	}
 	
 	// 36 交易分行机构码
@@ -330,7 +347,7 @@ public class AntiMoneyLaunderingData {
 	
 	@Index(39)
 	public String getJydfyhmc(){
-		// TODO : 需要文本处理？？
+		retStr(replaceBlank(thmc), 64);
 		return thmc;
 	}
 	
@@ -344,5 +361,151 @@ public class AntiMoneyLaunderingData {
 	@Index(41)
 	public String getJydfkhh(){
 		return null;
+	}
+	
+	public void setHxrq(Date hxrq) {
+		this.hxrq = hxrq;
+	}
+
+	public void setJzsj(String jzsj) {
+		this.jzsj = jzsj;
+	}
+
+	public void setJyjg(String jyjg) {
+		this.jyjg = jyjg;
+	}
+
+	public void setBhzh(String bhzh) {
+		this.bhzh = bhzh;
+	}
+
+	public void setBhhm(String bhhm) {
+		this.bhhm = bhhm;
+	}
+
+	public void setJdbs(String jdbs) {
+		this.jdbs = jdbs;
+	}
+
+	public void setYwlx(String ywlx) {
+		this.ywlx = ywlx;
+	}
+
+	public void setBz(String bz) {
+		this.bz = bz;
+	}
+
+	public void setJe(double je) {
+		this.je = je;
+	}
+
+	public void setThzh(String thzh) {
+		this.thzh = thzh;
+	}
+
+	public void setZy(String zy) {
+		this.zy = zy;
+	}
+
+	public void setThhm(String thhm) {
+		this.thhm = thhm;
+	}
+
+	public void setThjm(String thjm) {
+		this.thjm = thjm;
+	}
+
+	public void setBhpzlx(String bhpzlx) {
+		this.bhpzlx = bhpzlx;
+	}
+
+	public void setYwls(String ywls) {
+		this.ywls = ywls;
+	}
+
+	public void setZkh(String zkh) {
+		this.zkh = zkh;
+	}
+
+	public void setThmc(String thmc) {
+		this.thmc = thmc;
+	}
+
+	// 截断字符串
+	private String retStr(String inputStr, int len) {
+
+		// 如果输入的字符串为空或者是"",则直接输出"";
+		if (inputStr == null || inputStr.equals(""))
+			return "";
+		// 如果len为0或大于总字节数
+		if (len == 0 || len > strTotalLen(inputStr))
+			return inputStr;
+
+		char[] chr = inputStr.toCharArray();
+
+		String str = "";
+		int count = 0;
+		for (char cc : chr) {
+			if (count < len) {
+				if (strIfChinese(cc)) {
+					if (count + 1 == len)
+						return str;
+					count = count + 2;
+					str = str + String.valueOf(cc);
+				} else {
+					count = count + 1;
+					str = str + String.valueOf(cc);
+				}
+			}
+		}
+		return str;
+	}	
+	
+	static {
+		p = Pattern.compile("\\s*|\t|\r|\n");
+	}
+	
+	private static Pattern p;
+	
+	/**
+	 * 字符转换。
+	 * 
+	 * @param src 原字符串
+	 * @return 特殊字符转换
+	 */
+	public static String replaceBlank(String src){
+		Matcher m = p.matcher(src);
+		String after = m.replaceAll("");
+		return after;
+	}
+	
+	/**
+	 * 计算字符串长度。一个中文字符算两个字符。
+	 * 
+	 * @param src 原字符串
+	 * @return 长度
+	 */
+	public static int strTotalLen(String src){
+		int len = 0;
+		char[] chars = src.toCharArray();
+		for(char c : chars ){
+			if(!strIfChinese(c)){
+				len += 1;
+			} else {
+				len += 2;
+			}
+		}
+		return len;
+	}
+	
+	/**
+	 * 判断字符是否为中文字符（即两个字节的字符）。
+	 * 
+	 * @param c 字符
+	 * @return 结果
+	 */
+	public static boolean strIfChinese(char c){
+		String cStr = String.valueOf(c);
+		return cStr.getBytes().length > 1 ? true : false;
 	}
 }
