@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.alf.bean.AntiMoneyLaunderingData;
 import com.alf.service.AntiMoneyLaunderingDataService;
 
@@ -17,6 +19,8 @@ import com.alf.service.AntiMoneyLaunderingDataService;
  */
 public class Main {
 
+	public static Logger logger = Logger.getLogger(Main.class);
+	
 	/**
 	 * 主方法。
 	 * 
@@ -27,10 +31,10 @@ public class Main {
 
 		/* 初始化，如果失败，则结束程序。 */
 		if (!initialize()) {
-			System.out.println("程序初始化失败!");
+			logger.info("程序初始化失败!");
 			return;
 		} else {
-			System.out.println("程序初始化成功...");
+			logger.info("程序初始化成功...");
 		}
 
 		/* 获取当天的反洗钱数据 */
@@ -45,7 +49,7 @@ public class Main {
 
 		/* 关闭程序 */
 		close();
-		System.out.println("程序结束.");
+		logger.info("程序结束.");
 	}
 
 	/**
