@@ -26,7 +26,7 @@
 	  <!-- 10 金额 -->
 	  <result column="JE" jdbcType="DOUBLE" property="je" />
 	  <!-- 11 现金转账标志 -->
-	  <result column="THZH" jdbcType="CHAR" property=""thzh />
+	  <result column="THZH" jdbcType="CHAR" property="thzh" />
 	  <!-- 12 摘要 -->
 	  <result column="zy" jdbcType="CHAR" property="zy" />
 	  <!-- 13 交易对方类型 NULL -->
