@@ -17,8 +17,10 @@
       </transactionManager>
       <!--  UNPOOLED 非连接池配置  -->
       <dataSource type="UNPOOLED">
-        <property name="driver" value="org.sqlite.JDBC"/>
-        <property name="url" value="jdbc:sqlite:D:/SQLite/test.db"/>
+        <property name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=tcpj_common"/>
+        <property name="username" value="tcpj"/>
+        <property name="password" value="tcpj"/>
       </dataSource>
     </environment>
   </environments>
