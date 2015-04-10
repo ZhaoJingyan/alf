@@ -12,31 +12,29 @@ import com.alf.bean.AntiMoneyLaunderingData;
  */
 public interface AntiMoneyLaunderingDatesFile {
 
-	/**
-	 * 在文件中添加一条AntiMoneyLaunderingData记录。
-	 * 
-	 * @param data
-	 *            一条反些钱记录
-	 */
-	public void addAntiMoneyLaunderingData(AntiMoneyLaunderingData data);
+    /**
+     * 在文件中添加一条AntiMoneyLaunderingData记录。
+     * 
+     * @param data 一条反些钱记录
+     */
+    public void addAntiMoneyLaunderingData(AntiMoneyLaunderingData data);
 
-	/**
-	 * 在文件中添加多条AntiMoneyLaunderingData记录。
-	 * 
-	 * @param datas
-	 *            多条反洗钱记录
-	 */
-	public void addAntiMoneyLaunderingDatas(List<AntiMoneyLaunderingData> datas);
-	
-	/**
-	 * 关闭文件IO。
-	 */
-	public void close();
+    /**
+     * 在文件中添加多条AntiMoneyLaunderingData记录。
+     * 
+     * @param datas 多条反洗钱记录
+     */
+    public void addAntiMoneyLaunderingDatas(List<AntiMoneyLaunderingData> datas);
 
-	/**
-	 * 获取写入文件的行数。
-	 * 
-	 * @return 文件行数
-	 */
-	public long getLineNumber();
+    /**
+     * 关闭文件IO。
+     */
+    public void close();
+
+    /**
+     * 获取写入文件的行数。
+     * 
+     * @return 文件行数
+     */
+    public long getLineNumber();
 }

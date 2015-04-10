@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 设置格式对象，默认格式对象为{@link com.alf.DefaultCellFormat}}。
- * 格式对象必须实现接口{@link com.alf.CellFormat}。
+ * 设置格式对象，默认格式对象为{@link com.alf.DefaultCellFormat} 。 格式对象必须实现接口
+ * {@link com.alf.CellFormat}。
  * 
  * @author Zhao Jinyan
  *
@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Format{
-	public String value() default "com.alf.DefaultCellFormat";
+public @interface Format {
+    public String value() default "com.alf.DefaultCellFormat";
 }

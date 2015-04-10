@@ -7,13 +7,13 @@ package com.alf;
  *
  */
 public interface CellFormat {
-	
-	/**
-	 * 生成指定格式的字符串。
-	 * 
-	 * @param object 将被转化为字符串的对象
-	 * @param index object的调用顺序
-	 * @return
-	 */
-	public String print(Object object, int index);
+
+    /**
+     * 生成指定格式的字符串。
+     * 
+     * @param object 将被转化为字符串的对象
+     * @param index object的调用顺序
+     * @return
+     */
+    public String print(Object object, int index);
 }

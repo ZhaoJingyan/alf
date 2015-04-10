@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * …Ë÷√ªª––∑˚°£
+ * 
  * @author Zhao Jinyan
  *
  */
@@ -15,5 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface LineBreak {
-	public String value() default "\n";
+    public String value() default "\n";
 }
